@@ -68,7 +68,7 @@ def test_create_gist_multiple_times(gist_desc="create_gist_multiple_times"):
 
 res_type_names3 = ["",
                    "fdfds",
-                   "   ",
+                   "  ",
                    "1234"]
 @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
 def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
