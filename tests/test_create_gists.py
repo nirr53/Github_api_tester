@@ -84,9 +84,3 @@ def test_delete_deleted_gist(gist_desc="delete_deleted_gist"):
     res = helper.create_gist(True, gist_desc, basic_create_set)
     helper.delete_gist(res['id'])
     helper.delete_gist(res['id'], 404)
-
-
-
-
-
-
