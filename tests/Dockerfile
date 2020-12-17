@@ -1,7 +1,9 @@
-FROM python:3.7-alpine
-WORKDIR /code
+FROM python:3.7
+WORKDIR /tests
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-EXPOSE 5000
-COPY . .
-CMD ["flask", "run"]
+RUN pip3 install -r requirements.txt
+RUN pip3 install pytest, requests
+
+
+RUN ["pytest", "-v", "test_*.py"]
+CMD tail -f /dev/null
