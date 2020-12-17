@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4b58ed63-ef67-4194-b914-1522e3a90601" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Dockerfile" afterDir="false" />
-    </list>
+    <list default="true" id="4b58ed63-ef67-4194-b914-1522e3a90601" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/tests/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -235,7 +232,7 @@
       <workItem from="1608069709287" duration="3501000" />
       <workItem from="1608112067359" duration="3051000" />
       <workItem from="1608121386778" duration="14054000" />
-      <workItem from="1608204854427" duration="246000" />
+      <workItem from="1608204854427" duration="857000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <created>1608202979179</created>
@@ -258,11 +255,25 @@
       <option name="project" value="LOCAL" />
       <updated>1608204597548</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fixes">
+      <created>1608205281598</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608205281598</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixes">
+      <created>1608205323834</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608205323834</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47589000" />
+    <option name="totallyTimeSpent" value="48200000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -275,7 +286,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17831613" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -294,7 +304,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.29854015" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.7131387" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -415,7 +425,7 @@
     <entry file="file://$PROJECT_DIR$/tests/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
