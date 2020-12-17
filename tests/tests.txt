@@ -1,0 +1,1540 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.7.3, pytest-5.4.3, py-1.9.0, pluggy-0.12.0 -- /Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7
+cachedir: .pytest_cache
+metadata: {'Python': '3.7.3', 'Platform': 'Darwin-19.4.0-x86_64-i386-64bit', 'Packages': {'pytest': '5.4.3', 'py': '1.9.0', 'pluggy': '0.12.0'}, 'Plugins': {'metadata': '1.10.0', 'repeat': '0.8.0', 'html': '2.1.1', 'reportportal': '5.0.3', 'jira': '0.3.15', 'xdist': '1.34.0', 'forked': '1.3.0'}}
+rootdir: /Users/nirkleiman/IdeaProjects/Github_api_tester/tests
+plugins: metadata-1.10.0, repeat-0.8.0, html-2.1.1, reportportal-5.0.3, jira-0.3.15, xdist-1.34.0, forked-1.3.0
+collecting ... collected 40 items
+
+test_create_gists.py::test_create_gist_public_tests[True-Public gist] FAILED
+test_create_gists.py::test_create_gist_public_tests[False-Private gist] FAILED
+test_create_gists.py::test_create_gist_description_tests[] FAILED
+test_create_gists.py::test_create_gist_description_tests[S_chars1 !@#$%^&*()] FAILED
+test_create_gists.py::test_create_gist_description_tests[S_chars2 _+';:<>/'`] FAILED
+test_create_gists.py::test_create_gist_description_tests[S_chars3 []{}|~\xb1\xa7] FAILED
+test_create_gists.py::test_create_gist_description_tests[1234567890] FAILED
+test_create_gists.py::test_create_gist_description_tests[           ] FAILED
+test_create_gists.py::test_create_gist_description_tests[Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,] FAILED
+test_create_gists.py::test_create_gist_check_res_headers FAILED
+test_create_gists.py::test_create_gist_multiple_times 
+Try 0
+FAILED
+test_create_gists.py::test_delete_gist_failures[] FAILED
+test_create_gists.py::test_delete_gist_failures[fdfds] FAILED
+test_create_gists.py::test_delete_gist_failures[   ] FAILED
+test_create_gists.py::test_delete_gist_failures[1234] FAILED
+test_create_gists.py::test_delete_deleted_gist FAILED
+test_edit_gists.py::test_star_gist response code - 204
+FAILED
+test_edit_gists.py::test_star_starred_gist response code - 204
+response code - 204
+FAILED
+test_edit_gists.py::test_unstar_gist response code - 204
+FAILED
+test_edit_gists.py::test_unstar_unstarred_gist response code - 204
+FAILED
+test_edit_gists.py::test_star_and_unstar_multiple_times response code - 204
+response code - 204
+response code - 204
+FAILED
+test_edit_gists.py::test_star_unstar_invalid_gist[] response code - 404
+FAILED
+test_edit_gists.py::test_star_unstar_invalid_gist[fdfds] response code - 404
+FAILED
+test_edit_gists.py::test_star_unstar_invalid_gist[   ] response code - 404
+FAILED
+test_edit_gists.py::test_star_unstar_invalid_gist[1234] response code - 404
+FAILED
+test_edit_gists.py::test_edit_gist FAILED
+test_edit_gists.py::test_get_previous_gist_revision ---403---
+FAILED
+test_edit_gists.py::test_get_invalid_previous_gist_revision[-404] ---403---
+FAILED
+test_edit_gists.py::test_get_invalid_previous_gist_revision[!$%^&-422] ---403---
+FAILED
+test_edit_gists.py::test_get_invalid_previous_gist_revision[     -422] ---403---
+FAILED
+test_edit_gists.py::test_get_invalid_previous_gist_revision[12345-422] ---403---
+FAILED
+test_get_gists.py::test_get_gists_for_username FAILED
+test_get_gists.py::test_get_gists_for_invalid_username[] FAILED
+test_get_gists.py::test_get_gists_for_invalid_username[fdfds] FAILED
+test_get_gists.py::test_get_gists_for_invalid_username[   ] FAILED
+test_get_gists.py::test_get_gists_for_invalid_username[1234] FAILED
+test_get_gists.py::test_get_gists_for_invalid_username[nirr53234] FAILED
+test_get_gists.py::test_get_all_gists FAILED
+test_get_gists.py::test_get_public_gists[True-public_gist_test] FAILED
+test_get_gists.py::test_get_public_gists[False-private_gist_test] FAILED
+
+=================================== FAILURES ===================================
+_______________ test_create_gist_public_tests[True-Public gist] ________________
+
+is_public = True, gist_desc = 'Public gist'
+
+    @pytest.mark.parametrize("is_public, gist_desc", res_type_names1)
+    def test_create_gist_public_tests(is_public, gist_desc):
+        try:
+            res = helper.create_gist(is_public, gist_desc, basic_create_set)
+            assert res['public'] == is_public
+            assert gist_desc in res['description']
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'e4f0cd5ab8d75aa711305a8fcc659138', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________ test_create_gist_public_tests[False-Private gist] _______________
+
+is_public = False, gist_desc = 'Private gist'
+
+    @pytest.mark.parametrize("is_public, gist_desc", res_type_names1)
+    def test_create_gist_public_tests(is_public, gist_desc):
+        try:
+            res = helper.create_gist(is_public, gist_desc, basic_create_set)
+            assert res['public'] == is_public
+            assert gist_desc in res['description']
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '8a5fa65b21a7d17f2fd44076a3e5a0d5', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_____________________ test_create_gist_description_tests[] _____________________
+
+gist_desc = ''
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'c8898e6157412ff9006b1891da928dbc', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+___________ test_create_gist_description_tests[S_chars1 !@#$%^&*()] ____________
+
+gist_desc = 'S_chars1 !@#$%^&*()'
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '8e72a079cde6ffb06b160a7f4eceff36', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+___________ test_create_gist_description_tests[S_chars2 _+';:<>/'`] ____________
+
+gist_desc = "S_chars2 _+';:<>/'`"
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'ac9e90ff582ef8795a3c806632d1981e', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_________ test_create_gist_description_tests[S_chars3 []{}|~\xb1\xa7] __________
+
+gist_desc = 'S_chars3 []{}|~±§'
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'aad89a014f4740b23c1426dc53c5bda9', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________ test_create_gist_description_tests[1234567890] ________________
+
+gist_desc = '1234567890'
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '225a8453431e279a36c0fd495ef5db74', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________ test_create_gist_description_tests[           ] ________________
+
+gist_desc = '           '
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'fdf908c42f1ba6db2ec556a6cceb6fe0', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_ test_create_gist_description_tests[Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,] _
+
+gist_desc = 'Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,'
+
+    @pytest.mark.parametrize("gist_desc", res_type_names2)
+    def test_create_gist_description_tests(gist_desc):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '77288a108a8de820f90571d9c91a73db', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________________ test_create_gist_check_res_headers ______________________
+
+gist_desc = 'check_res_headers'
+
+    def test_create_gist_check_res_headers(gist_desc="check_res_headers"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            fields = ['comments', 'comments_url', 'created_at', 'description' , 'user',
+                      'files'   , 'forks'       , 'forks_url' , 'git_pull_url', 'git_push_url',
+                      'history' , 'html_url'    , 'id'        , 'node_id'     , 'owner',
+                      'public'  , 'truncated'   , 'updated_at', 'url']
+            for field in fields:
+                assert field in res
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '28ff673d6552fdec638d4d0e4db9f403', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________________ test_create_gist_multiple_times ________________________
+
+gist_desc = 'create_gist_multiple_times'
+
+    def test_create_gist_multiple_times(gist_desc="create_gist_multiple_times"):
+        for idx in range(3):
+            print("\nTry {}".format(idx))
+            try:
+                res = helper.create_gist(True, gist_desc, basic_create_set)
+            finally:
+>               helper.delete_gist(res['id'])
+
+test_create_gists.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '9d3c51b7ade1cd6186fc2aa391dec9ff', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_________________________ test_delete_gist_failures[] __________________________
+
+invalid_gist_id = '', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           helper.delete_gist(invalid_gist_id, 404)
+
+test_create_gists.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '', exp_status_code = 404
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = '', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            helper.delete_gist(invalid_gist_id, 404)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '3bd73f8f1889888ed1fe27213f3ba77a', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________________ test_delete_gist_failures[fdfds] _______________________
+
+invalid_gist_id = 'fdfds', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           helper.delete_gist(invalid_gist_id, 404)
+
+test_create_gists.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'fdfds', exp_status_code = 404
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = 'fdfds', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            helper.delete_gist(invalid_gist_id, 404)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '3ea1ba51a62716f44d069dcc5f93ed42', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________________ test_delete_gist_failures[   ] ________________________
+
+invalid_gist_id = '   ', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           helper.delete_gist(invalid_gist_id, 404)
+
+test_create_gists.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '   ', exp_status_code = 404
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = '   ', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            helper.delete_gist(invalid_gist_id, 404)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'c9ed3eee076fa7b0c0e80c462869deec', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________________ test_delete_gist_failures[1234] ________________________
+
+invalid_gist_id = '1234', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           helper.delete_gist(invalid_gist_id, 404)
+
+test_create_gists.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '1234', exp_status_code = 404
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = '1234', gist_desc = 'delete_gist_failures'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names3)
+    def test_delete_gist_failures(invalid_gist_id, gist_desc="delete_gist_failures"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            helper.delete_gist(invalid_gist_id, 404)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_create_gists.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = 'fdb1e4371b294ad6b25e920a62e624c9', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+___________________________ test_delete_deleted_gist ___________________________
+
+gist_desc = 'delete_deleted_gist11'
+
+    def test_delete_deleted_gist(gist_desc="delete_deleted_gist11"):
+        res = helper.create_gist(True, gist_desc, basic_create_set)
+>       helper.delete_gist(res['id'])
+
+test_create_gists.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdac83340f0>
+gist_id = '3ef3f9e9fc692c8f302a2c0e9981bc32', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________________________ test_star_gist ________________________________
+
+    def test_star_gist():
+        try:
+            res = helper.create_gist(False, "star_gist", basic_create_set)
+            helper.star_gist(res['id'])
+            helper.verify_gist_starred(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'f31587302bedabbeff0a7d740b5dd44b', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+____________________________ test_star_starred_gist ____________________________
+
+    def test_star_starred_gist():
+        try:
+            res = helper.create_gist(False, "star_starred_gist", basic_create_set)
+            helper.star_gist(res['id'])
+            helper.star_gist(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '5ff09688bf354f548167d99ac19ce51c', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________________________ test_unstar_gist _______________________________
+
+    def test_unstar_gist():
+        try:
+            res = helper.create_gist(False, "unstar_gist", basic_create_set)
+            helper.star_gist(res['id'])
+            helper.unstar_gist(res['id'])
+            helper.verify_gist_unstarred(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '2f4392b2bb177af9fd45d9e1bbb09527', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+__________________________ test_unstar_unstarred_gist __________________________
+
+    def test_unstar_unstarred_gist():
+        try:
+            res = helper.create_gist(False, "unstar_unstarred_gist", basic_create_set)
+            helper.star_gist(res['id'])
+            helper.unstar_gist(res['id'])
+            helper.unstar_gist(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '40177b0dd0f62c31f01c2f3dbd226777', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_____________________ test_star_and_unstar_multiple_times ______________________
+
+    def test_star_and_unstar_multiple_times():
+        try:
+            res = helper.create_gist(False, "star_and_unstar_multiple_times", basic_create_set)
+            for idx in range(3):
+                helper.star_gist(res['id'])
+                helper.unstar_gist(res['id'])
+            helper.verify_gist_unstarred(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '7f4704d61e8dc63fe15ab0fcb06d5131', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________________ test_star_unstar_invalid_gist[] ________________________
+
+invalid_gist_id = '', exp_code = 404
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_star_unstar_invalid_gist(invalid_gist_id, exp_code=404):
+        try:
+            res = helper.create_gist(False, "star_invalid_gist", basic_create_set)
+            helper.star_gist(invalid_gist_id, exp_code)
+            helper.unstar_gist(invalid_gist_id, exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '368a41b126bd93e7213be194bee908c2', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_____________________ test_star_unstar_invalid_gist[fdfds] _____________________
+
+invalid_gist_id = 'fdfds', exp_code = 404
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_star_unstar_invalid_gist(invalid_gist_id, exp_code=404):
+        try:
+            res = helper.create_gist(False, "star_invalid_gist", basic_create_set)
+            helper.star_gist(invalid_gist_id, exp_code)
+            helper.unstar_gist(invalid_gist_id, exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '74001c33076af4a6803dcf4938e5b40d', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________________ test_star_unstar_invalid_gist[   ] ______________________
+
+invalid_gist_id = '   ', exp_code = 404
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_star_unstar_invalid_gist(invalid_gist_id, exp_code=404):
+        try:
+            res = helper.create_gist(False, "star_invalid_gist", basic_create_set)
+            helper.star_gist(invalid_gist_id, exp_code)
+            helper.unstar_gist(invalid_gist_id, exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'ef967175e75de86f3130567c46ca2c25', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_____________________ test_star_unstar_invalid_gist[1234] ______________________
+
+invalid_gist_id = '1234', exp_code = 404
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_star_unstar_invalid_gist(invalid_gist_id, exp_code=404):
+        try:
+            res = helper.create_gist(False, "star_invalid_gist", basic_create_set)
+            helper.star_gist(invalid_gist_id, exp_code)
+            helper.unstar_gist(invalid_gist_id, exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'c334c11b15ae5e091d9d914a4b99f565', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________________________ test_edit_gist ________________________________
+
+    def test_edit_gist():
+        try:
+            ini_desc, ed_desc = helper.wrap_name("edit_gist_initial_desc1"), helper.wrap_name("edit_gist_edited_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+            assert ed_desc in res['description']
+            d4 = dict(basic_create_set)
+            d4.update(edit_create_set)
+            for key in d4:
+                assert key in res['files']
+                assert d4[key]['content'] in res['files'][key]['content']
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'c0658ab0890688dd15fddd3927fa8e41', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_______________________ test_get_previous_gist_revision ________________________
+
+    def test_get_previous_gist_revision():
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_prev_rev_ini_desc"), helper.wrap_name("get_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+>           prev_revision = helper.get_previous_revision(res['id'], edit_res['history'][1]['version'])
+
+test_edit_gists.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'c4d817f892893315c96e8138162b8e90'
+previous_version = '473ab459c09289928d04f045b7940722f93898bf', exp_code = 200
+
+    def get_previous_revision(self, gist_id, previous_version, exp_code=200):
+        response = requests.get('{}/gists/{}/{}'.format(GIT_URL, gist_id, previous_version))
+    
+    
+        print("---{}---".format(response.status_code))
+    
+    
+>       assert response.status_code == exp_code, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:121: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+    def test_get_previous_gist_revision():
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_prev_rev_ini_desc"), helper.wrap_name("get_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+            prev_revision = helper.get_previous_revision(res['id'], edit_res['history'][1]['version'])
+            assert edit_res['history'][1]['version'] in prev_revision['history'][0]['version']
+            for key in basic_create_set:
+                assert key in prev_revision['files']
+            for key in edit_create_set:
+                assert key not in prev_revision['files']
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'c4d817f892893315c96e8138162b8e90', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________ test_get_invalid_previous_gist_revision[-404] _________________
+
+invalid_data = '', exp_code = 404
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+>           helper.get_previous_revision(res['id'], invalid_data, exp_code)
+
+test_edit_gists.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'a8c4fc362986da8414a225ec63473729', previous_version = ''
+exp_code = 404
+
+    def get_previous_revision(self, gist_id, previous_version, exp_code=200):
+        response = requests.get('{}/gists/{}/{}'.format(GIT_URL, gist_id, previous_version))
+    
+    
+        print("---{}---".format(response.status_code))
+    
+    
+>       assert response.status_code == exp_code, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:121: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_data = '', exp_code = 404
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+            helper.get_previous_revision(res['id'], invalid_data, exp_code)
+            helper.get_previous_revision(invalid_data, edit_res['history'][1]['version'], exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'a8c4fc362986da8414a225ec63473729', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________ test_get_invalid_previous_gist_revision[!$%^&-422] ______________
+
+invalid_data = '!$%^&', exp_code = 422
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+>           helper.get_previous_revision(res['id'], invalid_data, exp_code)
+
+test_edit_gists.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '5a2989a16984498dab989fe530f0b4b8', previous_version = '!$%^&'
+exp_code = 422
+
+    def get_previous_revision(self, gist_id, previous_version, exp_code=200):
+        response = requests.get('{}/gists/{}/{}'.format(GIT_URL, gist_id, previous_version))
+    
+    
+        print("---{}---".format(response.status_code))
+    
+    
+>       assert response.status_code == exp_code, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:121: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_data = '!$%^&', exp_code = 422
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+            helper.get_previous_revision(res['id'], invalid_data, exp_code)
+            helper.get_previous_revision(invalid_data, edit_res['history'][1]['version'], exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = '5a2989a16984498dab989fe530f0b4b8', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________ test_get_invalid_previous_gist_revision[     -422] ______________
+
+invalid_data = '     ', exp_code = 422
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+>           helper.get_previous_revision(res['id'], invalid_data, exp_code)
+
+test_edit_gists.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'b1de35bb89356aa9b729bc83ccd98329', previous_version = '     '
+exp_code = 422
+
+    def get_previous_revision(self, gist_id, previous_version, exp_code=200):
+        response = requests.get('{}/gists/{}/{}'.format(GIT_URL, gist_id, previous_version))
+    
+    
+        print("---{}---".format(response.status_code))
+    
+    
+>       assert response.status_code == exp_code, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:121: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_data = '     ', exp_code = 422
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+            helper.get_previous_revision(res['id'], invalid_data, exp_code)
+            helper.get_previous_revision(invalid_data, edit_res['history'][1]['version'], exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'b1de35bb89356aa9b729bc83ccd98329', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________ test_get_invalid_previous_gist_revision[12345-422] ______________
+
+invalid_data = '12345', exp_code = 422
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+>           helper.get_previous_revision(res['id'], invalid_data, exp_code)
+
+test_edit_gists.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'e9da4a342a59f8758ed087e3c50ceed6', previous_version = '12345'
+exp_code = 422
+
+    def get_previous_revision(self, gist_id, previous_version, exp_code=200):
+        response = requests.get('{}/gists/{}/{}'.format(GIT_URL, gist_id, previous_version))
+    
+    
+        print("---{}---".format(response.status_code))
+    
+    
+>       assert response.status_code == exp_code, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:121: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_data = '12345', exp_code = 422
+
+    @pytest.mark.parametrize("invalid_data, exp_code", res_type_names2)
+    def test_get_invalid_previous_gist_revision(invalid_data, exp_code):
+        try:
+            ini_desc, ed_desc = helper.wrap_name("get_inv_prev_rev_ini_desc"), helper.wrap_name("get_inv_prev_rev_edit_desc")
+            res = helper.create_gist(False, ini_desc, basic_create_set)
+            edit_res = helper.edit_gist(res['id'], ed_desc, edit_create_set)
+            helper.get_previous_revision(res['id'], invalid_data, exp_code)
+            helper.get_previous_revision(invalid_data, edit_res['history'][1]['version'], exp_code)
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_edit_gists.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80d1908>
+gist_id = 'e9da4a342a59f8758ed087e3c50ceed6', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+_________________________ test_get_gists_for_username __________________________
+
+gist_desc = 'test_get_gist_for user'
+
+    def test_get_gists_for_username(gist_desc="test_get_gist_for user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           gists_list = helper.get_gists_for_user(GIT_USERNAME)
+
+test_get_gists.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+username = 'nirr53'
+
+    def get_gists_for_user(self, username):
+        response = requests.get('{}/users/{}/gists'.format(GIT_URL, username))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:45: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+gist_desc = 'test_get_gist_for user'
+
+    def test_get_gists_for_username(gist_desc="test_get_gist_for user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            gists_list = helper.get_gists_for_user(GIT_USERNAME)
+            for gist in gists_list:
+                if res['id'] in gist['id']:
+                    break
+            else:
+                assert False, "gist {} was not detected !".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '3d9fb8f74afbd60f04ea27e11107c668', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+____________________ test_get_gists_for_invalid_username[] _____________________
+
+invalid_gist_id = '', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           gists_list = helper.get_gists_for_user(invalid_gist_id)
+
+test_get_gists.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+username = ''
+
+    def get_gists_for_user(self, username):
+        response = requests.get('{}/users/{}/gists'.format(GIT_URL, username))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:45: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = '', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            gists_list = helper.get_gists_for_user(invalid_gist_id)
+            for gist in gists_list:
+                if res['id'] in gist['id']:
+                    assert False, "gist {} was detected !".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '92e22d83efd99dfd405119676f858d92', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+__________________ test_get_gists_for_invalid_username[fdfds] __________________
+
+invalid_gist_id = 'fdfds', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           gists_list = helper.get_gists_for_user(invalid_gist_id)
+
+test_get_gists.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+username = 'fdfds'
+
+    def get_gists_for_user(self, username):
+        response = requests.get('{}/users/{}/gists'.format(GIT_URL, username))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:45: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = 'fdfds', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            gists_list = helper.get_gists_for_user(invalid_gist_id)
+            for gist in gists_list:
+                if res['id'] in gist['id']:
+                    assert False, "gist {} was detected !".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = 'e35e065cf40a819d66c41e59538ee72d', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+___________________ test_get_gists_for_invalid_username[   ] ___________________
+
+invalid_gist_id = '   ', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           gists_list = helper.get_gists_for_user(invalid_gist_id)
+
+test_get_gists.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+username = '   '
+
+    def get_gists_for_user(self, username):
+        response = requests.get('{}/users/{}/gists'.format(GIT_URL, username))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:45: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = '   ', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            gists_list = helper.get_gists_for_user(invalid_gist_id)
+            for gist in gists_list:
+                if res['id'] in gist['id']:
+                    assert False, "gist {} was detected !".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '0b99ae69f6b14bdfc3f082ebfa4e2c72', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+__________________ test_get_gists_for_invalid_username[1234] ___________________
+
+invalid_gist_id = '1234', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           gists_list = helper.get_gists_for_user(invalid_gist_id)
+
+test_get_gists.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+username = '1234'
+
+    def get_gists_for_user(self, username):
+        response = requests.get('{}/users/{}/gists'.format(GIT_URL, username))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:45: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = '1234', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            gists_list = helper.get_gists_for_user(invalid_gist_id)
+            for gist in gists_list:
+                if res['id'] in gist['id']:
+                    assert False, "gist {} was detected !".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '019fff2674ea6e0ec9b946bf1fbf871e', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________ test_get_gists_for_invalid_username[nirr53234] ________________
+
+invalid_gist_id = 'nirr53234', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+>           gists_list = helper.get_gists_for_user(invalid_gist_id)
+
+test_get_gists.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+username = 'nirr53234'
+
+    def get_gists_for_user(self, username):
+        response = requests.get('{}/users/{}/gists'.format(GIT_URL, username))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:45: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+invalid_gist_id = 'nirr53234', gist_desc = 'test_get_gist_for invalid_git_user'
+
+    @pytest.mark.parametrize("invalid_gist_id", res_type_names1)
+    def test_get_gists_for_invalid_username(invalid_gist_id, gist_desc="test_get_gist_for invalid_git_user"):
+        try:
+            res = helper.create_gist(True, gist_desc, basic_create_set)
+            gists_list = helper.get_gists_for_user(invalid_gist_id)
+            for gist in gists_list:
+                if res['id'] in gist['id']:
+                    assert False, "gist {} was detected !".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '8763724a9556a168321cab474e715d1c', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+______________________________ test_get_all_gists ______________________________
+
+    def test_get_all_gists():
+>       helper.get_all_gists()
+
+test_get_gists.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+
+    def get_all_gists(self):
+        response = requests.get('{}/gists'.format(GIT_URL))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:27: AssertionError
+_________________ test_get_public_gists[True-public_gist_test] _________________
+
+is_public = True, gist_desc = 'public_gist_test'
+
+    @pytest.mark.parametrize("is_public, gist_desc", res_type_names2)
+    def test_get_public_gists(is_public, gist_desc):
+        try:
+            res = helper.create_gist(is_public, gist_desc, basic_create_set)
+>           public_gists_list = helper.get_public_gists()
+
+test_get_gists.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+
+    def get_public_gists(self):
+        response = requests.get('{}/gists/public'.format(GIT_URL))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:33: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+is_public = True, gist_desc = 'public_gist_test'
+
+    @pytest.mark.parametrize("is_public, gist_desc", res_type_names2)
+    def test_get_public_gists(is_public, gist_desc):
+        try:
+            res = helper.create_gist(is_public, gist_desc, basic_create_set)
+            public_gists_list = helper.get_public_gists()
+            for gist in public_gists_list:
+                if res['id'] in gist['id']:
+                    if is_public:
+                        break
+                    else:
+                        assert False, "gist {} was detected as public gist!".format(res['id'])
+                else:
+                    pass
+            else:
+                assert False, "gist {} was not detected on public gists!".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '17a554e74a9934dbcf88701de2d5d390', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+________________ test_get_public_gists[False-private_gist_test] ________________
+
+is_public = False, gist_desc = 'private_gist_test'
+
+    @pytest.mark.parametrize("is_public, gist_desc", res_type_names2)
+    def test_get_public_gists(is_public, gist_desc):
+        try:
+            res = helper.create_gist(is_public, gist_desc, basic_create_set)
+>           public_gists_list = helper.get_public_gists()
+
+test_get_gists.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+
+    def get_public_gists(self):
+        response = requests.get('{}/gists/public'.format(GIT_URL))
+>       assert response.status_code == 200, "returned status-code is {} !".format(response.status_code)
+E       AssertionError: returned status-code is 403 !
+
+Github_utilities.py:33: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+is_public = False, gist_desc = 'private_gist_test'
+
+    @pytest.mark.parametrize("is_public, gist_desc", res_type_names2)
+    def test_get_public_gists(is_public, gist_desc):
+        try:
+            res = helper.create_gist(is_public, gist_desc, basic_create_set)
+            public_gists_list = helper.get_public_gists()
+            for gist in public_gists_list:
+                if res['id'] in gist['id']:
+                    if is_public:
+                        break
+                    else:
+                        assert False, "gist {} was detected as public gist!".format(res['id'])
+                else:
+                    pass
+            else:
+                assert False, "gist {} was not detected on public gists!".format(res['id'])
+        finally:
+>           helper.delete_gist(res['id'])
+
+test_get_gists.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Github_utilities.Github_Utilities object at 0x7fdaa80dfe10>
+gist_id = '4f5a2197cdde988fe0d4d642dd84cc3f', exp_status_code = 200
+
+    def delete_gist(self, gist_id, exp_status_code=200):
+        response = requests.get('{}/gists/{}/forks'.format(GIT_URL, gist_id))
+>       assert response.status_code == exp_status_code
+E       AssertionError
+
+Github_utilities.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED test_create_gists.py::test_create_gist_public_tests[True-Public gist]
+FAILED test_create_gists.py::test_create_gist_public_tests[False-Private gist]
+FAILED test_create_gists.py::test_create_gist_description_tests[] - Assertion...
+FAILED test_create_gists.py::test_create_gist_description_tests[S_chars1 !@#$%^&*()]
+FAILED test_create_gists.py::test_create_gist_description_tests[S_chars2 _+';:<>/'`]
+FAILED test_create_gists.py::test_create_gist_description_tests[S_chars3 []{}|~\xb1\xa7]
+FAILED test_create_gists.py::test_create_gist_description_tests[1234567890]
+FAILED test_create_gists.py::test_create_gist_description_tests[           ]
+FAILED test_create_gists.py::test_create_gist_description_tests[Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,Very-long-gist-name1,]
+FAILED test_create_gists.py::test_create_gist_check_res_headers - AssertionError
+FAILED test_create_gists.py::test_create_gist_multiple_times - AssertionError
+FAILED test_create_gists.py::test_delete_gist_failures[] - AssertionError
+FAILED test_create_gists.py::test_delete_gist_failures[fdfds] - AssertionError
+FAILED test_create_gists.py::test_delete_gist_failures[   ] - AssertionError
+FAILED test_create_gists.py::test_delete_gist_failures[1234] - AssertionError
+FAILED test_create_gists.py::test_delete_deleted_gist - AssertionError
+FAILED test_edit_gists.py::test_star_gist - AssertionError
+FAILED test_edit_gists.py::test_star_starred_gist - AssertionError
+FAILED test_edit_gists.py::test_unstar_gist - AssertionError
+FAILED test_edit_gists.py::test_unstar_unstarred_gist - AssertionError
+FAILED test_edit_gists.py::test_star_and_unstar_multiple_times - AssertionError
+FAILED test_edit_gists.py::test_star_unstar_invalid_gist[] - AssertionError
+FAILED test_edit_gists.py::test_star_unstar_invalid_gist[fdfds] - AssertionError
+FAILED test_edit_gists.py::test_star_unstar_invalid_gist[   ] - AssertionError
+FAILED test_edit_gists.py::test_star_unstar_invalid_gist[1234] - AssertionError
+FAILED test_edit_gists.py::test_edit_gist - AssertionError
+FAILED test_edit_gists.py::test_get_previous_gist_revision - AssertionError
+FAILED test_edit_gists.py::test_get_invalid_previous_gist_revision[-404] - As...
+FAILED test_edit_gists.py::test_get_invalid_previous_gist_revision[!$%^&-422]
+FAILED test_edit_gists.py::test_get_invalid_previous_gist_revision[     -422]
+FAILED test_edit_gists.py::test_get_invalid_previous_gist_revision[12345-422]
+FAILED test_get_gists.py::test_get_gists_for_username - AssertionError
+FAILED test_get_gists.py::test_get_gists_for_invalid_username[] - AssertionError
+FAILED test_get_gists.py::test_get_gists_for_invalid_username[fdfds] - Assert...
+FAILED test_get_gists.py::test_get_gists_for_invalid_username[   ] - Assertio...
+FAILED test_get_gists.py::test_get_gists_for_invalid_username[1234] - Asserti...
+FAILED test_get_gists.py::test_get_gists_for_invalid_username[nirr53234] - As...
+FAILED test_get_gists.py::test_get_all_gists - AssertionError: returned statu...
+FAILED test_get_gists.py::test_get_public_gists[True-public_gist_test] - Asse...
+FAILED test_get_gists.py::test_get_public_gists[False-private_gist_test] - As...
+======================== 40 failed in 114.10s (0:01:54) ========================
